@@ -18,6 +18,11 @@ function App() {
     setSongs(response.data);
   }
 
+  // async function addNewSong() {
+  //   let tempSong = await axios.post('http://127.0.0.1:8000/api/music/');
+  //   setSongs(tempSong);
+  // }
+
   function addNewSong(song) {
     let tempSong = [...songs, song];
     setSongs(tempSong);
