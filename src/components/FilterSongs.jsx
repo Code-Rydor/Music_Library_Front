@@ -1,17 +1,6 @@
 import React from 'react';
 
-
 const FilterSongs = ({ searchInput, input }) => {
-
-    
-//     let results = filterSongs.filter(function (el) {
-//         if (el.includes(`${filterInput}`)) {
-//             return true;
-//         }
-        
-//     })
-//    return results
-
 
     return ( 
         <div>
@@ -24,5 +13,3 @@ const FilterSongs = ({ searchInput, input }) => {
 }
  
 export default FilterSongs;
-
-//<input type='text' value={title} onChange={(event) => setTitle(event.target.value)} />

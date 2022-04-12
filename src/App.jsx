@@ -31,14 +31,15 @@ function App() {
 
   const searchInput = (event) => {
     setInput(event.target.value)
+  }
 
-    useEffect(() => {
-      if (requestReload) {
-        getAllSongs();
-        requestReload = !requestReload
-      }
-    }, [requestReload])
-  
+  useEffect(() => {
+    if (requestReload) {
+      getAllSongs();
+      requestReload = !requestReload
+    }
+  }, [requestReload])
+
 
     return (
       <div>
@@ -49,6 +50,6 @@ function App() {
       </div>
     );
   }
-}
+
 
 export default App;
