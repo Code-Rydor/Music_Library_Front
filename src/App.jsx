@@ -7,31 +7,43 @@ import axios from 'axios';
 
 function App() {
 
-  const [songs, setSongs] = useState([{title: 'Clouds', artist: 'NF', album: 'Clouds (The Mixtape)', release_date: '2021-03-26', genre: 'rap', like: 1}])
+  const [songs, setSongs] = useState([])
+  let requestReload = true
 
   useEffect(() => {
-    getAllSongs();
-  }, [])
+    if (requestReload) {
+      getAllSongs();
+      requestReload = !requestReload
+    }
+  }, [requestReload])
+  
 
   async function getAllSongs() {
     let response = await axios.get('http://127.0.0.1:8000/api/music/');
     setSongs(response.data);
   }
+  
+  async function createSong(newSong) {
 
-  // async function addNewSong() {
-  //   let tempSong = await axios.post('http://127.0.0.1:8000/api/music/');
-  //   setSongs(tempSong);
+    console.log("New Song param: ", newSong)
+    let response = await axios.post('http://127.0.0.1:8000/api/music/', newSong);
+    if (response.status === 201) {
+      requestReload = true
+      window.location.reload();
+    }
+  }
+
+  // async function deleteSong(ID) {
+  //   let response = await axios.delete(`http://127.0.0.1:8000/api/musi/${ID}`);
+  //   console.log(response)
+  //   window.location.reload();
   // }
 
-  function addNewSong(song) {
-    let tempSong = [...songs, song];
-    setSongs(tempSong);
-  }
-  
+
   return (
     <div>
+      <AddSong createSong={createSong} />
       <DisplayMusic parentSongs={songs} />
-      <AddSong addNewSongProperties={addNewSong} />
 
     </div>
   );
