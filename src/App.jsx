@@ -2,21 +2,17 @@ import React, { useState, useEffect } from 'react';
 import DisplayMusic from './components/DisplayMusic/DisplayMusic';
 import AddSong from './components/AddSong/AddSong';
 import axios from 'axios';
+import FilterSongs from './components/FilterSongs';
 
 
 
 function App() {
 
   const [songs, setSongs] = useState([])
+  const [input, setInput] = useState('')
   let requestReload = true
 
-  useEffect(() => {
-    if (requestReload) {
-      getAllSongs();
-      requestReload = !requestReload
-    }
-  }, [requestReload])
-  
+
 
   async function getAllSongs() {
     let response = await axios.get('http://127.0.0.1:8000/api/music/');
@@ -33,20 +29,26 @@ function App() {
     }
   }
 
-  // async function deleteSong(ID) {
-  //   let response = await axios.delete(`http://127.0.0.1:8000/api/musi/${ID}`);
-  //   console.log(response)
-  //   window.location.reload();
-  // }
+  const searchInput = (event) => {
+    setInput(event.target.value)
 
+    useEffect(() => {
+      if (requestReload) {
+        getAllSongs();
+        requestReload = !requestReload
+      }
+    }, [requestReload])
+  
 
-  return (
-    <div>
-      <AddSong createSong={createSong} />
-      <DisplayMusic parentSongs={songs} />
+    return (
+      <div>
+        <FilterSongs searchInput={searchInput} input={input} />
+        <AddSong createSong={createSong} />
+        <DisplayMusic parentSongs={songs} input={input} />
 
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default App;
